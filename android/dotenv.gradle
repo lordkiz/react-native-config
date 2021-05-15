@@ -66,12 +66,18 @@ def loadDotEnv(flavor = getCurrentFlavor()) {
 
 loadDotEnv()
 
+def encodeString(String str) {
+    //to base64
+    return str.bytes.encodeBase64().toString()
+}
+
+
 android {
     defaultConfig {
         project.env.each { k, v ->
             def escaped = v.replaceAll("%","\\\\u0025")
-            buildConfigField "String", k, "\"$v\""
-            resValue "string", k, "\"$escaped\""
+            buildConfigField "String", k, enncodeString("\"$v\"")
+            resValue "string", k, encodeString("\"$escaped\"")
         }
     }
 }
@@ -87,8 +93,8 @@ tasks.whenTaskAdded { task ->
                             loadDotEnv(envConfigName)
                             project.env.each { k, v ->
                                 def escaped = v.replaceAll("%","\\\\u0025")
-                                variant.buildConfigField "String", k, "\"$v\""
-                                variant.resValue "string", k, "\"$escaped\""
+                                variant.buildConfigField "String", k, encodeString("\"$v\"")
+                                variant.resValue "string", k, encodeString("\"$escaped\"")
                             }
                         }
                     }
