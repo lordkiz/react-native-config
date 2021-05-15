@@ -76,8 +76,10 @@ android {
     defaultConfig {
         project.env.each { k, v ->
             def escaped = v.replaceAll("%","\\\\u0025")
-            buildConfigField "String", k, encodeString("\"$v\"")
-            resValue "string", k, encodeString("\"$escaped\"")
+            def encodedValue = encodeString(v)
+            def encodedEscaped = encodeString(escaped)
+            buildConfigField "String", k, "\"$encodedValue\""
+            resValue "string", k, "\"$encodedEscaped\""
         }
     }
 }
@@ -93,8 +95,10 @@ tasks.whenTaskAdded { task ->
                             loadDotEnv(envConfigName)
                             project.env.each { k, v ->
                                 def escaped = v.replaceAll("%","\\\\u0025")
-                                variant.buildConfigField "String", k, encodeString("\"$v\"")
-                                variant.resValue "string", k, encodeString("\"$escaped\"")
+                                def encodedValue = encodeString(v)
+                                def encodedEscaped = encodeString(escaped)
+                                variant.buildConfigField "String", k, "\"$encodedValue\""
+                                variant.resValue "string", k, "\"$encodedEscaped\""
                             }
                         }
                     }
