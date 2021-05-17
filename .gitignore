@@ -4,3 +4,8 @@ node_modules
 xcuserdata
 xcshareddata
 /.idea/
+build/
+.idea
+.gradle
+local.properties
+*.iml
