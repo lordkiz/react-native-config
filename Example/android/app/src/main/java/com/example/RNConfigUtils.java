@@ -4,7 +4,7 @@ import android.util.Base64;
 
 public class RNConfigUtils {
 
-    public static  String decode(String encodedString, String key) {
+    public static String decode(String encodedString, String key) {
         byte[] decodedBytes = Base64.decode(encodedString, Base64.DEFAULT);
         byte[] keyBytes = key.getBytes();
 
